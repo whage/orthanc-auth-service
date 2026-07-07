@@ -8,6 +8,8 @@ Pending changes
 ===============
 
 - Add `user_id` in UserProfileResponse when using API key ([reference](https://github.com/orthanc-team/orthanc-auth-service/pull/37))
+- In `orthanc-auth-service`: 
+  - Upgraded pyjwt module
 
 v 26.4.1
 ========
