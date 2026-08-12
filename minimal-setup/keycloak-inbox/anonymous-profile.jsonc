@@ -5,6 +5,7 @@
     "authorized-labels": [
     ],
     "permissions": [
+        "upload"
     ],
     "validity": 60
 }

@@ -6,7 +6,6 @@
     "authorized-labels": [
     ],
     "permissions": [
-        "upload"
     ],
     "groups": [],
     "validity": 60
