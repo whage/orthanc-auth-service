@@ -4,9 +4,10 @@ SPDX-FileCopyrightText: 2022 - 2026 Orthanc Team SRL <info@orthanc.team>
 SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
-Pending changes
-===============
+v 26.8.0
+========
 
+- Fix default anonymous profile permissions.
 - Add `user_id` in UserProfileResponse when using API key ([reference](https://github.com/orthanc-team/orthanc-auth-service/pull/37))
 - In `orthanc-auth-service`: 
   - Upgraded pyjwt module
