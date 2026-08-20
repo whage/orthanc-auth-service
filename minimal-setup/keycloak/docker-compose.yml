@@ -6,7 +6,7 @@ version: "3"
 services:
 
   nginx:
-    image: orthancteam/orthanc-nginx:26.4.0
+    image: orthancteam/orthanc-nginx:26.8.0
     depends_on: [orthanc, orthanc-auth-service, keycloak]
     restart: unless-stopped
     ports: ["80:80"]
@@ -127,7 +127,7 @@ services:
             "ExtraPermissions": [
               ["post", "^/plugins/inbox/commit$", "upload|all"],
               ["post", "^/plugins/inbox/monitor-processing$", "upload|all"]
-            ],
+            ]
           },
           "PythonScript": "/scripts/inbox-plugin.py",
           "DicomWeb": {
@@ -137,9 +137,9 @@ services:
         }
 
   orthanc-auth-service:
-    image: orthancteam/orthanc-auth-service:26.4.0
+    image: orthancteam/orthanc-auth-service:main
     # always disable this port mapping in production !!!
-    ports: ["8000:8000"]
+    # ports: ["8000:8000"]
     # permissions can be customized in the permissions.json file
     volumes:
       - ./permissions.jsonc:/orthanc_auth_service/permissions.json
@@ -184,7 +184,7 @@ services:
 
 # to use OHIF-plugin: you don't need this container
   ohif:
-    image: orthancteam/ohif-v3:26.4.0
+    image: orthancteam/ohif-v3:26.8.0
 #  uncomment if you want to customize ohif configuration
     # volumes:
     #  - ./ohif-app-config.js:/usr/share/nginx/html/ohif/app-config.js
@@ -192,7 +192,7 @@ services:
 
 
   keycloak:
-    image: orthancteam/orthanc-keycloak:26.4.0
+    image: orthancteam/orthanc-keycloak:26.8.0
     depends_on: [keycloak-db]
     restart: unless-stopped
     environment:
