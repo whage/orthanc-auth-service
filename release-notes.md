@@ -4,6 +4,12 @@ SPDX-FileCopyrightText: 2022 - 2026 Orthanc Team SRL <info@orthanc.team>
 SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
+Pending changes
+===============
+
+- Added support for `inbox-link`.
+
+
 v 26.8.0
 ========
 

@@ -113,7 +113,7 @@ def on_post_validate_form(output, uri, **request):
 
     result = {}
 
-    if False:
+    if True:
         subject_id = form_fields['SubjectId']
         if not subject_id:
             mark_invalid_field(result, 'SubjectId', "The Subject Id is mandatory")

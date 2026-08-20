@@ -254,7 +254,26 @@ def get_user_profile(user_profile_request: UserProfileRequest):
         if not user_profile_request.token_value and user_profile_request.user_id is None :
             logging.warning("No token provided, returning anonymous profile")
             return anonymous_profile
-        
+
+        # first check if this is an inbox-link token and not a KeyCloak token
+        try:
+            if isinstance(user_profile_request.token_value, str) and user_profile_request.token_value.count('.') == 2:
+                payload = jwt.decode(user_profile_request.token_value, options={"verify_signature": False})
+                if "type" in payload and payload["type"] == TokenType.INBOX_LINK:
+                    decoded_token = token_service.decode_token(token=user_profile_request.token_value)
+                    if decoded_token.token_type == TokenType.INBOX_LINK:
+                        user_name = decoded_token.username if decoded_token.username else 'Anonymous'
+                        return UserProfileResponse(
+                            name=user_name,
+                            user_id=None,
+                            permissions=['upload'],
+                            groups=[],
+                            authorized_labels=[],
+                            validity=60)
+
+        except (jwt.DecodeError, jwt.InvalidTokenError):
+            pass # this is not an inbox-link
+
         if keycloak_std_client is None:
             logging.warning("Keycloak is not configured, all users are considered anonymous")
             return anonymous_profile

@@ -39,13 +39,10 @@ class TokenType(str, Enum):
 
     MEDDREAM_INSTANT_LINK = 'meddream-instant-link'  # a direct link to MedDream viewer that is valid only a few minutes to open the viewer directly
 
-    # OSIMIS_VIEWER_INSTANT_LINK = 'osimis-viewer-instant-link'  # a direct link to Osimis viewer that is valid only a few minutes to open the viewer directly
-    # STONE_VIEWER_INSTANT_LINK = 'stone-viewer-instant-link'  # a direct link to Stone viewer that is valid only a few minutes to open the viewer directly
-    #
-    # DOWNLOAD_INSTANT_LINK = 'download-instant-link'  # a link to download a study/series/instance directly
-    VIEWER_INSTANT_LINK = 'viewer-instant-link'             # a link to a resource to be used directly.
-    DOWNLOAD_INSTANT_LINK = 'download-instant-link'         # a link to a resource to be used directly.
+    VIEWER_INSTANT_LINK = 'viewer-instant-link'             # a link to a resource to be used directly in a viewer.
+    DOWNLOAD_INSTANT_LINK = 'download-instant-link'         # a link to a resource to be used directly for download.
 
+    INBOX_LINK = 'inbox-link'                               # a link that is valid to upload files for a given period
 
     INVALID = 'invalid'
 
@@ -65,6 +62,7 @@ class TokenCreationRequest(BaseModel):
     type: TokenType = Field(default=TokenType.INVALID)
     expiration_date: Optional[datetime] = Field(alias="expiration-date", default=None)
     validity_duration: Optional[int] = Field(alias='validity-duration', default=None)            # alternate way to provide an expiration_date, more convenient for instant-links since the duration is relative to the server time, not the client time !
+    username: Optional[str] = None                                                               # in case the token impersonate a user (currently only used for INBOX_LINK and INSTANT_LINKS)
 
     class Config:  # allow creating object from dict (used when deserializing the JWT)
         populate_by_name = True
@@ -102,6 +100,7 @@ class TokenDecoderResponse(BaseModel):
     error_code: Optional[DecoderErrorCodes] = Field(alias="error-code", default=None)
     redirect_url: Optional[str] = Field(alias="redirect-url", default=None)
     resources: List[OrthancResource]
+    username: Optional[str] = None
 
 class UserProfileRequest(BaseModel):
     token_key: Optional[str] = Field(alias="token-key", default=None)
@@ -127,6 +126,7 @@ class UserPermissions(str, Enum):
     AUDIT_LOGS = 'audit-logs'
     WORKLISTS = 'worklists'
     SHARE = 'share'
+    CREATE_INBOX_LINKS = 'create-inbox-links'
 
 
 class RolePermissions(BaseModel):

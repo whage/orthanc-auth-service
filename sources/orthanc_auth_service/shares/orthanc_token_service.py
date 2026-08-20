@@ -73,6 +73,10 @@ class OrthancTokenService:
             else:
                 return urllib.parse.urljoin(self.public_landing_root_, f"?token={token}")
 
+        elif request.type == TokenType.INBOX_LINK:
+            public_root = self.public_orthanc_root_
+            return urllib.parse.urljoin(public_root, f"ui/app/inbox.html?&token={token}")
+
         elif request.type == TokenType.STONE_VIEWER_PUBLICATION:
             if not has_dicom_uids:
                 logging.error("No dicom_uid provided while generating a link to the StoneViewer")
@@ -184,7 +188,8 @@ class OrthancTokenService:
             TokenType.OHIF_VIEWER_PUBLICATION,
             TokenType.DOWNLOAD_INSTANT_LINK,
             TokenType.VIEWER_INSTANT_LINK,
-            TokenType.VOLVIEW_VIEWER_PUBLICATION
+            TokenType.VOLVIEW_VIEWER_PUBLICATION,
+            TokenType.INBOX_LINK
         ]:
             token = self.tokens_manager_.generate_token(request=request)
 
@@ -239,9 +244,13 @@ class OrthancTokenService:
             # try to decode the token to get the token_creation_request
             token_creation_request = TokenCreationRequest(**self.tokens_manager_._decode_token(token))  # this will raise if the token can not be decoded
             response.token_type = token_creation_request.type
+            response.username = token_creation_request.username
 
             if self.is_expired(token_creation_request):
                 response.error_code = DecoderErrorCodes.EXPIRED
+                return response
+
+            if token_creation_request.type == TokenType.INBOX_LINK:
                 return response
 
             # we can not check that the token is valid for the given study, this will be checked by the auth plugin once the viewer opens
