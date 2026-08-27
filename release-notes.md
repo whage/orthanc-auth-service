@@ -8,6 +8,7 @@ Pending changes
 ===============
 
 - Added support for `inbox-link`.
+- Upgraded `Nginx` Docker base image from `1.29.8` to `1.31.3` (including `Nginx-Certbot`)
 
 
 v 26.8.0

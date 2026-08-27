@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 
-FROM nginx:1.29.8
+FROM nginx:1.31.3
 
 RUN mkdir /etc/nginx/enabled-reverse-proxies
 RUN mkdir /scripts
