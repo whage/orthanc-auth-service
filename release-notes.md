@@ -4,8 +4,8 @@ SPDX-FileCopyrightText: 2022 - 2026 Orthanc Team SRL <info@orthanc.team>
 SPDX-License-Identifier: GPL-3.0-or-later
 -->
 
-Pending changes
-===============
+v 26.8.1
+========
 
 - Added support for `inbox-link`.
 - Upgraded `Nginx` Docker base image from `1.29.8` to `1.31.3` (including `Nginx-Certbot`)
@@ -15,7 +15,9 @@ Pending changes
 - Upgraded `Keycloak` Docker base image from `26.2.5` to `26.7.2`
 > [!CAUTION]
 > BREAKING CHANGE:
-> The permissions `view-realm` has to be granted to the `admin-cli` client in the Keycloak configuration!
+> The `view-realm` client role has to be assigned to the `admin-cli` client in the Keycloak configuration!
+> Without this permission, the `auth-service` won't be able to retrieve the roles from Keycloak and
+> you won't be able to edit permissions in OE2.
 
 v 26.8.0
 ========
