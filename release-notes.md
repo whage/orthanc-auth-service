@@ -10,6 +10,7 @@ Pending changes
 - Added support for `inbox-link`.
 - Upgraded `Nginx` Docker base image from `1.29.8` to `1.31.3` (including `Nginx-Certbot`)
 - Upgraded `Meddream` Docker base image from `8.8.0` to `8.9.0`
+- New `KEYCLOAK_JWT_LEEWAY_SECONDS` en var for the `auth-service` image.
 
 
 v 26.8.0
