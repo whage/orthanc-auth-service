@@ -12,6 +12,7 @@ Pending changes
 - Upgraded `Meddream` Docker base image from `8.8.0` to `8.9.0`
 - New `KEYCLOAK_JWT_LEEWAY_SECONDS` en var for the `auth-service` image.
 - removed the `demo-setup` folder that was redundant with the `minimal-setup` folder.
+- Upgraded `Keycloak` Docker base image from `26.2.5` to `26.7.2`
 
 
 v 26.8.0
