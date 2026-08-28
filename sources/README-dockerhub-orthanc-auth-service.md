@@ -9,16 +9,18 @@ SPDX-License-Identifier: CC0-1.0
 Web service to run next to Orthanc to handle sharing of studies by issuing [JWT](https://jwt.io/) that can then be passed
 in authorization headers that will be checked by the [Authorization plugin](https://book.orthanc-server.com/plugins/authorization.html).
 
-| Environment variables       | Default value                                | Description                                                                                                                                                         |
-|-----------------------------|:---------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ENABLE_KEYCLOAK             | false                                        | Connects the auth-service to keycloak to handle users                                                                                                               |
-| KEYCLOAK_URI                | http://keycloak:8080/realms/orthanc/         | The URI of the realm to use.                                                                                                                                        |
-| PERMISSIONS_FILE_PATH       | /orthanc-auth-service/permissions.json       | Path to a file containing the mapping between keycloak roles and permissions.                                                                                       |
-| ANONYMOUS_PROFILE_FILE_PATH | /orthanc-auth-service/anonymous-profile.json | Path to a file containing the definition of the anonymous profile. |
-|                             |                                              |                                                                                                                                                                     |
-| ENABLE_KEYCLOAK_API_KEYS    | false                                        | Enables the API keys support in Keycloak                                                                                                                            | 
-| KEYCLOAK_ADMIN_URI          | http://keycloak:8080/admin/realms/orthanc/   | The URI of admin API of the realm to use.                                                                                                                           |
-| KEYCLOAK_CLIENT_SECRET      | -                                            | `admin-cli` client secret used to authenticate to the Keycloak admin API                                                                                            |
+|    Environment variables    |                Default value                 |                                  Description                                  |
+| --------------------------- | :------------------------------------------- | :---------------------------------------------------------------------------- |
+| ENABLE_KEYCLOAK             | false                                        | Connects the auth-service to keycloak to handle users                         |
+| KEYCLOAK_URI                | http://keycloak:8080/realms/orthanc/         | The URI of the realm to use.                                                  |
+| PERMISSIONS_FILE_PATH       | /orthanc-auth-service/permissions.json       | Path to a file containing the mapping between keycloak roles and permissions. |
+| ANONYMOUS_PROFILE_FILE_PATH | /orthanc-auth-service/anonymous-profile.json | Path to a file containing the definition of the anonymous profile.            |
+|                             |                                              |                                                                               |
+| ENABLE_KEYCLOAK_API_KEYS    | false                                        | Enables the API keys support in Keycloak                                      |
+| KEYCLOAK_ADMIN_URI          | http://keycloak:8080/admin/realms/orthanc/   | The URI of admin API of the realm to use.                                     |
+| KEYCLOAK_CLIENT_SECRET      | -                                            | `admin-cli` client secret used to authenticate to the Keycloak admin API      |
+| KEYCLOAK_JWT_LEEWAY_SECONDS | 10                                           | The maximum allowed offset between the Keycloak and auth-service clocks       |
+
 |                             |                                              |                                                                                                                                                                     |
 | PUBLIC_ORTHANC_ROOT         | -                                            | The public root URL to Orthanc when using links to access resources. e.g: `http://localhost/orthanc/`                                                               |
 | PUBLIC_LANDING_ROOT         | -                                            | The landing page URL for links.  This page will check the token validity and redirect to e.g. a viewer.  e.g.: `http://localhost/orthanc/ui/app/token-landing.html` |

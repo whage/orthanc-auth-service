@@ -35,8 +35,6 @@ Features:
   - [orthancteam/meddream-viewer](https://hub.docker.com/r/orthancteam/meddream-viewer) is a pre-configured version of the [meddream:orthanc-dicom-viewer](https://hub.docker.com/r/meddream/orthanc-dicom-viewer) image
 
 
-![Sharing a study in OE2](./demo-setup/doc/Share-study.gif)
-
 
 ## Release notes
 
