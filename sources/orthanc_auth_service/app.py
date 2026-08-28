@@ -45,8 +45,10 @@ if not handle_users_with_keycloak:
 else:
     logging.warning("ENABLE_KEYCLOAK is set, using keycloak to handle users")
     keycloak_uri = os.environ.get("KEYCLOAK_URI", "http://keycloak:8080/realms/orthanc/")
+    keycloak_jwt_leeway_seconds = int(os.environ.get("KEYCLOAK_JWT_LEEWAY_SECONDS", "10"))
     keycloak_std_client = create_keycloak_from_secrets(keycloak_uri=keycloak_uri,
-                                                       roles_configuration=roles_configuration)
+                                                       roles_configuration=roles_configuration,
+                                                       jwt_leeway_seconds=keycloak_jwt_leeway_seconds)
 
     enable_api_keys = os.environ.get("ENABLE_KEYCLOAK_API_KEYS", "false") == "true"
     needKeycloakAdmin = False
@@ -280,23 +282,28 @@ def get_user_profile(user_profile_request: UserProfileRequest):
 
         elif user_profile_request.token_key is not None:
             if user_profile_request.token_key == "api-key" and keycloak_admin_client is not None:
+                logging.debug(f"calling keycloak_admin_client.get_user_profile_from_api_key")
                 response = keycloak_admin_client.get_user_profile_from_api_key(api_key=user_profile_request.token_value)
             else:
                 token = user_profile_request.token_value
                 if token.startswith("Bearer "):
                     token = token.replace("Bearer ", "")
+                logging.debug(f"calling keycloak_std_client.get_user_profile_from_token")
                 response = keycloak_std_client.get_user_profile_from_token(token)
         elif user_profile_request.user_id is not None and keycloak_admin_client is not None:
+            logging.debug(f"calling keycloak_admin_client.get_user_profile_from_user_id")
             response = keycloak_admin_client.get_user_profile_from_user_id(user_id=user_profile_request.user_id)
         else:
+            logging.debug(f"returning anonymous_profile")
             return anonymous_profile
 
         return response
-    except jwt.exceptions.InvalidAlgorithmError:
+    except jwt.exceptions.InvalidAlgorithmError as err:
         # not a valid user profile, consider it is anonymous
+        logging.error(f"InvalidAlgorithmError: {err} - returning anonymous_profile")
         return anonymous_profile
-    except jwt.exceptions.PyJWTError:
-        logging.error("Unable to decode JWT token - this might happen if trying to decode a basic auth token instead of a JWT - returning anonymous profile")
+    except jwt.exceptions.PyJWTError as err:
+        logging.error(f"Unable to decode JWT token: {err} - this might happen if trying to decode a basic auth token instead of a JWT - returning anonymous profile")
         return anonymous_profile
 
     except Exception as ex:
