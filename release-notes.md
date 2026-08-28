@@ -13,7 +13,9 @@ Pending changes
 - New `KEYCLOAK_JWT_LEEWAY_SECONDS` en var for the `auth-service` image.
 - removed the `demo-setup` folder that was redundant with the `minimal-setup` folder.
 - Upgraded `Keycloak` Docker base image from `26.2.5` to `26.7.2`
-
+> [!CAUTION]
+> BREAKING CHANGE:
+> The permissions `view-realm` has to be granted to the `admin-cli` client in the Keycloak configuration!
 
 v 26.8.0
 ========
