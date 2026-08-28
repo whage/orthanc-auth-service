@@ -21,15 +21,6 @@
         "share",
         "send"
       ]
-    },
-    "external-role": {
-      "authorized-labels": [
-        "external"
-      ],
-      "permissions": [
-        "view",
-        "download"
-      ]
     }
   },
   "available-labels": []

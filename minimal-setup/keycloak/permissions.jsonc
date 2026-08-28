@@ -34,17 +34,6 @@
         "share",
         "send"
       ]
-    },
-    "external-role": {
-      "authorized-labels": [
-        "external",
-        "Label3",
-        "Label5"
-      ],
-      "permissions": [
-        "view",
-        "download"
-      ]
     }
   },
   "available-labels": []

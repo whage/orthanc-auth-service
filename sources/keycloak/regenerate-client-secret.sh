@@ -53,10 +53,10 @@ READY=0
 
 while [ $READY -eq 0 ]; do
     # Try to authenticate and capture response
-    RESPONSE=$(./kcadm.sh config credentials --server http://localhost:8080 --realm orthanc --client admin-cli --secret THPRqk7LVRVxsxcNnOos3cjtLDfIfh0C 2>&1)
+    RESPONSE=$(./kcadm.sh config credentials --server http://localhost:8080 --realm orthanc --client admin-cli --secret keycloak-client-secret-change-me 2>&1)
     
     # Wait till Keycloak is ready
-    echo "$RESPONSE" | grep -q "Connection refused"
+    echo "$RESPONSE" | grep -qE "Connection refused|Service Unavailable"
     if [ $? -eq 0 ]; then
         echo "### Keycloak is not ready (Connection refused). Retrying..."
         sleep 3
